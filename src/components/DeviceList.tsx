@@ -34,11 +34,8 @@ export default function DeviceList() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
-        ⚡ Devices List
-      </h2>
+      <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>Devices List</h2>
 
-      {/* Search and Sort Controls */}
       <div
         style={{
           display: "flex",
@@ -77,7 +74,6 @@ export default function DeviceList() {
         </select>
       </div>
 
-      {/* Device Table */}
       <div
         style={{
           marginTop: "1rem",
@@ -87,7 +83,6 @@ export default function DeviceList() {
           boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
         }}
       >
-        {/* Header Row */}
         <div
           style={{
             display: "grid",
@@ -105,7 +100,6 @@ export default function DeviceList() {
           <span>Site</span>
         </div>
 
-        {/* Conditional Rendering */}
         {filtered.length === 0 ? (
           <div style={{ padding: "1rem" }} aria-label="Loading devices">
             <Skeleton width="100%" height="2rem" />

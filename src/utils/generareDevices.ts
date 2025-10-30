@@ -15,7 +15,10 @@ export function generateDevices(count: number = 100): Device[] {
   const devices: Device[] = [];
 
   for (let i = 0; i < count; i++) {
-    const usage = Array.from({ length: 24 }, () => faker.number.float({ min: 50, max: 500 }));
+    const usage = Array.from({ length: 24 }, () =>
+      faker.number.float({ min: 50, max: 500 })
+    );
+
     devices.push({
       id: faker.string.uuid(),
       name: faker.commerce.productName(),

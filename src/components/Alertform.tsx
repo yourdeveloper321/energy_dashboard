@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AlertForm() {
   const [threshold, setThreshold] = useState<number>(300);
   const [minutes, setMinutes] = useState<number>(5);
 
-  // ✅ Save rule in localStorage
   const saveRule = () => {
     const rule = { threshold, minutes };
     localStorage.setItem("alertRule", JSON.stringify(rule));
-    toast.success("✅ Alert rule saved!");
+    toast.success("Alert rule saved successfully!");
   };
 
-  // ✅ Load saved rule on mount
   useEffect(() => {
     const stored = localStorage.getItem("alertRule");
     if (stored) {
@@ -38,7 +36,7 @@ export default function AlertForm() {
         boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
       }}
     >
-      <h3 style={{ marginBottom: "1rem" }}>⚙️ Alert Rules</h3>
+      <h3 style={{ marginBottom: "1rem" }}>Alert Rules</h3>
 
       <div
         style={{
@@ -48,11 +46,10 @@ export default function AlertForm() {
           flexWrap: "wrap",
         }}
       >
-        {/* Power input */}
         <label>
           Power &gt;
           <input
-            aria-label="Power threshold in watts"  // ✅ accessibility
+            aria-label="Power threshold in watts"
             type="number"
             value={threshold}
             onChange={(e) => setThreshold(Number(e.target.value))}
@@ -67,11 +64,10 @@ export default function AlertForm() {
           W
         </label>
 
-        {/* Duration input */}
         <label>
           for
           <input
-            aria-label="Duration in minutes"       // ✅ accessibility
+            aria-label="Duration in minutes"
             type="number"
             value={minutes}
             onChange={(e) => setMinutes(Number(e.target.value))}
@@ -86,9 +82,8 @@ export default function AlertForm() {
           min
         </label>
 
-        {/* Save button */}
         <motion.button
-          aria-label="Save alert rule"             // ✅ accessibility
+          aria-label="Save alert rule"
           whileTap={{ scale: 0.95 }}
           whileHover={{ backgroundColor: "#eaeaea" }}
           onClick={saveRule}
@@ -101,7 +96,7 @@ export default function AlertForm() {
             background: "white",
           }}
         >
-          💾 Save
+          Save
         </motion.button>
       </div>
     </motion.div>

@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import { toast } from "react-toastify";
 
-// ⚙️ Suppress known chart warning
+// Suppress known Recharts warning about chart dimensions
 const originalWarn = console.warn;
 console.warn = (...args) => {
   if (
@@ -49,19 +49,19 @@ export default function DevicePage() {
     [id]
   );
 
-  // ✅ Wait for container to have size before rendering chart
   useLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+
     const resizeObserver = new ResizeObserver((entries) => {
       const rect = entries[0].contentRect;
       if (rect.width > 0 && rect.height > 0) setReady(true);
     });
+
     resizeObserver.observe(el);
     return () => resizeObserver.disconnect();
   }, []);
 
-  // ✅ Alert trigger logic inside component
   useEffect(() => {
     if (!device) return;
 
@@ -70,6 +70,7 @@ export default function DevicePage() {
 
     const rule = JSON.parse(ruleStr);
     const exceeded = device.usage.filter((v) => v > rule.threshold);
+
     if (exceeded.length >= rule.minutes) {
       toast.warning(
         `⚠️ Alert: ${device.name} power > ${rule.threshold}W for ${rule.minutes} min!`
@@ -112,11 +113,9 @@ export default function DevicePage() {
     <div className="device-page" style={{ padding: "2rem" }}>
       <h2 style={{ marginBottom: "0.5rem" }}>{device.name}</h2>
       <p style={{ marginBottom: "1rem" }}>
-        <strong>Type:</strong> {device.type} |{" "}
-        <strong>Site:</strong> {device.site}
+        <strong>Type:</strong> {device.type} | <strong>Site:</strong> {device.site}
       </p>
 
-      {/* ✅ Chart container ensures measurable size */}
       <div
         ref={containerRef}
         style={{
@@ -133,7 +132,7 @@ export default function DevicePage() {
         }}
       >
         {ready ? (
-          <ResponsiveContainer width="100%" height="100%" aria-label="Device power usage line chart">
+          <ResponsiveContainer width="100%" height="100%" aria-label="Device power usage chart">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="hour" />
@@ -149,11 +148,10 @@ export default function DevicePage() {
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <p>📊 Preparing chart...</p>
+          <p>Preparing chart...</p>
         )}
       </div>
 
-      {/* Stats grid */}
       <div
         style={{
           display: "grid",
